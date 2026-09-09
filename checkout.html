@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สั่งซื้อสินค้า - Amazon Echo Store</title>
+    <style>
+        :root { --bg-color: #080c14; --card-bg: rgba(21, 28, 46, 0.85); --accent-cyan: #00f2fe; --accent-blue: #4facfe; --text-main: #f0f4f8; --text-sub: #94a3b8; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 8%; background: rgba(8, 12, 20, 0.85); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 242, 254, 0.15); }
+        .logo { font-size: 1.4rem; font-weight: bold; background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: var(--text-sub); text-decoration: none; }
+        .btn-buy { background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); color: #000; font-weight: bold; padding: 0.6rem 1.2rem; border-radius: 20px; text-decoration: none; }
+
+        .container { padding: 3rem 8%; max-width: 900px; margin: 0 auto; }
+        .checkout-box { background: var(--card-bg); border-radius: 16px; padding: 2.5rem; border: 1px solid rgba(0, 242, 254, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: 0.5rem; color: var(--accent-cyan); }
+        input, select, textarea {
+            width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.4); color: #fff; font-size: 1rem;
+        }
+        
+        .btn-submit {
+            width: 100%; padding: 1rem; background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue));
+            color: #000; font-weight: bold; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; transition: 0.3s; margin-top: 1rem;
+        }
+        .btn-submit:hover { box-shadow: 0 0 20px rgba(0,242,254,0.6); }
+
+        @media (max-width: 768px) { nav { flex-direction: column; gap: 0.8rem; } .container { padding: 1.5rem 5%; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">AMAZON ECHO STORE</div>
+        <ul class="nav-links">
+            <li><a href="index.html">หน้าแรก</a></li>
+            <li><a href="tech-details.html">นวัตกรรม & เทคโนโลยี</a></li>
+            <li><a href="models-pricing.html">แคตตาล็อกสินค้า</a></li>
+            <li><a href="checkout.html" class="btn-buy">สั่งซื้อเลย</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="checkout-box">
+            <h2 style="color: var(--accent-cyan); margin-bottom: 1.5rem; text-align: center;">แบบฟอร์มสั่งซื้อสินค้า Amazon Echo</h2>
+            <form onsubmit="alert('ขอบคุณสำหรับคำสั่งซื้อ! เจ้าหน้าที่จะติดต่อกลับโดยเร็วที่สุด'); return false;">
+                <div class="form-group">
+                    <label>เลือกรุ่นสินค้าที่ต้องการสั่งซื้อ</label>
+                    <select required>
+                        <option value="dot">Amazon Echo Classic (Zero-Shot) - ฿2,990</option>
+                        <option value="future">Amazon Echo Futuristic 2026 (Few-Shot) - ฿6,590</option>
+                        <option value="dotmax">Amazon Echo Dot Max - ฿2,190</option>
+                        <option value="studio">Amazon Echo Studio Pro - ฿7,990</option>
+                        <option value="show">Amazon Echo Show 11 - ฿8,490</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ชื่อ-นามสกุล ผู้ซื้อ</label>
+                    <input type="text" placeholder="ระบุชื่อจริงและนามสกุล" required>
+                </div>
+
+                <div class="form-group">
+                    <label>เบอร์โทรศัพท์ติดต่อ</label>
+                    <input type="tel" placeholder="08X-XXX-XXXX" required>
+                </div>
+
+                <div class="form-group">
+                    <label>ที่อยู่สำหรับจัดส่งสินค้า</label>
+                    <textarea rows="3" placeholder="ระบุบ้านเลขที่ ถนน แขวง/ตำบล เขต/อำเภอ จังหวัด" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>ช่องทางการชำระเงิน</label>
+                    <select required>
+                        <option value="qr">โอนเงินผ่าน PromptPay QR Code</option>
+                        <option value="card">บัตรเครดิต / เดบิต</option>
+                        <option value="cod">เก็บเงินปลายทาง (COD)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-submit">ยืนยันการสั่งซื้อสินค้า</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
