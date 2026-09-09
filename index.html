@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon Echo & AI Ecosystem</title>
+    <title>Amazon Echo Store - สัมผัสอนาคตแห่ง Smart Home</title>
     <style>
         :root {
             --bg-color: #080c14;
@@ -14,311 +14,115 @@
             --text-sub: #94a3b8;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-            position: relative;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
-        /* Canvas Background */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Navigation Bar */
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 8%;
-            background: rgba(8, 12, 20, 0.85);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.2rem 8%; background: rgba(8, 12, 20, 0.85); backdrop-filter: blur(12px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 242, 254, 0.15);
         }
 
-        .logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 1px;
+        .logo { font-size: 1.4rem; font-weight: 800; background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+        .nav-links a { color: var(--text-sub); text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-cyan); }
+
+        .btn-buy {
             background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+            color: #000; font-weight: bold; padding: 0.6rem 1.2rem; border-radius: 20px; text-decoration: none; transition: 0.3s;
         }
+        .btn-buy:hover { box-shadow: 0 0 15px rgba(0, 242, 254, 0.6); }
 
-        .nav-links {
-            display: flex;
-            gap: 1.5rem;
-            list-style: none;
-        }
+        .hero { padding: 4rem 8% 2rem 8%; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(180deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { color: var(--text-sub); max-width: 600px; margin: 0 auto 2rem auto; font-size: 1.1rem; }
 
-        .nav-links a {
-            color: var(--text-sub);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+        .container { padding: 2rem 8% 4rem 8%; }
+        .section-title { font-size: 1.8rem; color: var(--text-main); margin-bottom: 1.5rem; border-left: 4px solid var(--accent-cyan); padding-left: 1rem; }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--accent-cyan);
-            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--accent-cyan);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after, .nav-links a.active::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 4rem 8% 2rem 8%;
-            text-align: center;
-            position: relative;
-        }
-
-        .author-tag {
-            display: inline-block;
-            background: rgba(0, 242, 254, 0.1);
-            color: var(--accent-cyan);
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            color: var(--text-sub);
-            max-width: 650px;
-            margin: 0 auto 2rem auto;
-            font-size: 1.05rem;
-        }
-
-        /* Content & Responsive Grid */
-        .container {
-            padding: 1rem 8% 4rem 8%;
-        }
-
-        .section-title {
-            font-size: 1.6rem;
-            color: var(--text-main);
-            margin-bottom: 1.5rem;
-            border-left: 4px solid var(--accent-cyan);
-            padding-left: 1rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 1.5rem;
-        }
-
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            background: var(--card-bg); backdrop-filter: blur(10px); border-radius: 16px; padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08); transition: 0.3s; display: flex; flex-direction: column; justify-content: space-between;
         }
+        .card:hover { transform: translateY(-8px); border-color: rgba(0, 242, 254, 0.4); box-shadow: 0 12px 40px rgba(0, 242, 254, 0.25); }
 
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(0, 242, 254, 0.4);
-            box-shadow: 0 12px 40px rgba(0, 242, 254, 0.25);
-        }
+        .card-img-wrapper { width: 100%; height: 220px; border-radius: 12px; overflow: hidden; margin-bottom: 1rem; background: #000; }
+        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .card-img-wrapper img { transform: scale(1.08); }
 
-        /* Responsive Image Container */
-        .card-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 220px;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 1.2rem;
-            background: #000;
-        }
+        .price-tag { font-size: 1.3rem; color: var(--accent-cyan); font-weight: bold; margin: 0.8rem 0; }
 
-        .card-img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .card:hover .card-img-wrapper img {
-            transform: scale(1.08);
-        }
-
-        .badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(8, 12, 20, 0.8);
-            color: var(--accent-cyan);
-            font-size: 0.75rem;
-            padding: 0.3rem 0.7rem;
-            border-radius: 12px;
-            border: 1px solid var(--accent-cyan);
-            backdrop-filter: blur(4px);
-        }
-
-        .card h3 {
-            color: var(--accent-cyan);
-            font-size: 1.25rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .card p {
-            color: var(--text-sub);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .prompt-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            padding: 0.8rem;
-            font-size: 0.85rem;
-            color: #e2e8f0;
-            border-left: 2px solid var(--accent-blue);
-            margin-top: 0.8rem;
-        }
-
-        /* Mobile Optimization */
         @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 0.8rem;
-                padding: 1rem 5%;
-            }
-            .hero {
-                padding: 2.5rem 5% 1.5rem 5%;
-            }
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            .container {
-                padding: 1rem 5% 3rem 5%;
-            }
-            .card-img-wrapper {
-                height: 180px;
-            }
+            nav { flex-direction: column; gap: 0.8rem; }
+            .hero h1 { font-size: 2rem; }
+            .container { padding: 1rem 5%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Animated Canvas Background -->
     <canvas id="bg-canvas"></canvas>
 
     <nav>
-        <div class="logo">ECHO AI 2026</div>
+        <div class="logo">AMAZON ECHO STORE</div>
         <ul class="nav-links">
-            <li><a href="index.html" class="active">หน้าหลัก (Overview)</a></li>
-            <li><a href="tech-details.html">เทคนิคและการจำลอง (Tech)</a></li>
-            <li><a href="models-pricing.html">รุ่นสินค้าและคู่มือ (Models)</a></li>
+            <li><a href="index.html" class="active">หน้าแรก</a></li>
+            <li><a href="tech-details.html">นวัตกรรม & เทคโนโลยี</a></li>
+            <li><a href="models-pricing.html">แคตตาล็อกสินค้า</a></li>
+            <li><a href="checkout.html" class="btn-buy">สั่งซื้อเลย</a></li>
         </ul>
     </nav>
 
     <section class="hero">
-        <div class="author-tag">รายงานโดย: สุทัตตา ทัณกาศ (2610717302036)[cite: 1]</div>
-        <h1>การพัฒนาและประยุกต์ใช้ Amazon Echo</h1>
-        <p>ศูนย์รวมนวัตกรรมสมาร์ทสปีคเกอร์ การออกแบบด้วย AI วิเคราะห์เชิงคณิตศาสตร์ และระบบ Smart Home แห่งอนาคต</p>
+        <h1>เปลี่ยนบ้านคุณให้เป็น Smart Home แห่งอนาคต</h1>
+        <p>สั่งการด้วยเสียง เชื่อมต่อความบันเทิง และควบคุมอุปกรณ์ในบ้านด้วย AI จาก Amazon Echo</p>
     </section>
 
     <div class="container">
-        <h2 class="section-title">วิวัฒนาการดีไซน์ Amazon Echo (AI Image Generation)</h2>
+        <h2 class="section-title">สินค้าไฮไลท์ & คอนเซปต์การดีไซน์ 2026</h2>
         
         <div class="grid">
-            <!-- Card 1: Classic Zero-Shot -->
             <div class="card">
-                <div class="card-img-wrapper">
-                    <span class="badge">Zero-Shot Design</span>
-                    <img src="https://images.unsplash.com/photo-1543512214-318c7553f230?auto=format&fit=crop&w=800&q=80" alt="Amazon Echo Classic Concept">
+                <div>
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1543512214-318c7553f230?auto=format&fit=crop&w=800&q=80" alt="Amazon Echo Classic">
+                    </div>
+                    <h3>Amazon Echo Classic (Zero-Shot)</h3>
+                    <p>ดีไซน์คลาสสิกทรงกระบอก หุ้มผ้าทอพิเศษ พร้อมวงแหวนไฟ LED สีน้ำเงิน ตอบสนองทุกคำสั่งเสียงอย่างแม่นยำ</p>
                 </div>
-                <h3>1. Zero-Shot Concept</h3>
-                <p>เน้นดีไซน์รูปทรงกลม/ทรงกระบอกดั้งเดิม หุ้มด้วยผ้าทอเนื้อละเอียดสีเทาเข้ม มีวงแสง LED สีน้ำเงินอันเป็นเอกลักษณ์ สะท้อนความคลาสสิกของ Ambient AI ในปัจจุบัน</p>
-                <div class="prompt-box">
-                    <strong>Prompt:</strong> "Amazon Echo ช่วยทำภาพให้ดูน่าสนใจดึงดูดผู้ใช้งานเพื่อขายสินค้า"
+                <div>
+                    <div class="price-tag">฿2,990</div>
+                    <a href="checkout.html" class="btn-buy" style="display:block; text-align:center;">สั่งซื้อรุ่นนี้</a>
                 </div>
             </div>
 
-            <!-- Card 2: Futuristic Few-Shot -->
             <div class="card">
-                <div class="card-img-wrapper">
-                    <span class="badge">Few-Shot 2026 Concept</span>
-                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Futuristic AI Smart Speaker">
+                <div>
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Amazon Echo Futuristic">
+                    </div>
+                    <h3>Amazon Echo Futuristic 2026 (Few-Shot)</h3>
+                    <p>คอนเซปต์อนาคต ดีไซน์ Levitating ลอยตัว อินเทอร์เฟซโฮโลแกรม ปรับแต่งสไตล์มินิมอล ยกระดับตกแต่งบ้าน</p>
                 </div>
-                <h3>2. Few-Shot Concept (อนาคต 2026)</h3>
-                <p>ยกระดับเป็นดีไซน์แบบ <i>Floating/Levitating</i> ไร้สายสัมผัส รูปทรงเรขาคณิตสมัยใหม่ พร้อมอินเทอร์เฟซโฮโลแกรมลอยตัว สะท้อนความล้ำยุคและการประมวลผลอัจฉริยะ</p>
-                <div class="prompt-box">
-                    <strong>Prompt:</strong> "ลองปรับดีไซน์, โทนสีมินิมอล, ฟังก์ชันอนาคต 2026"
+                <div>
+                    <div class="price-tag">฿6,590</div>
+                    <a href="checkout.html" class="btn-buy" style="display:block; text-align:center;">สั่งซื้อรุ่นนี้</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Background Particle Script -->
     <script>
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
-
         let particlesArray = [];
-        const numberOfParticles = 55;
-
-        function setCanvasSize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function setCanvasSize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         setCanvasSize();
-
-        window.addEventListener('resize', () => {
-            setCanvasSize();
-            init();
-        });
+        window.addEventListener('resize', () => { setCanvasSize(); init(); });
 
         class Particle {
             constructor() {
@@ -329,41 +133,27 @@
                 this.speedY = (Math.random() - 0.5) * 0.7;
                 this.color = `rgba(0, 242, 254, ${Math.random() * 0.5 + 0.2})`;
             }
-
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
+                this.x += this.speedX; this.y += this.speedY;
                 if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
-
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
+            draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); }
         }
 
         function init() {
             particlesArray = [];
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
+            for (let i = 0; i < 55; i++) particlesArray.push(new Particle());
         }
-
         function connectParticles() {
             for (let a = 0; a < particlesArray.length; a++) {
                 for (let b = a; b < particlesArray.length; b++) {
                     let dx = particlesArray[a].x - particlesArray[b].x;
                     let dy = particlesArray[a].y - particlesArray[b].y;
                     let distance = Math.sqrt(dx * dx + dy * dy);
-
                     if (distance < 110) {
                         ctx.strokeStyle = `rgba(0, 242, 254, ${1 - distance / 110 - 0.7})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
+                        ctx.lineWidth = 1; ctx.beginPath();
                         ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
                         ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
                         ctx.stroke();
@@ -371,19 +161,12 @@
                 }
             }
         }
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            connectParticles();
-            requestAnimationFrame(animate);
+            for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); }
+            connectParticles(); requestAnimationFrame(animate);
         }
-
-        init();
-        animate();
+        init(); animate();
     </script>
 </body>
 </html>
