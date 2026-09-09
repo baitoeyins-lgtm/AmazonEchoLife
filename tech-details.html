@@ -3,63 +3,391 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เทคโนโลยี & นวัตกรรม - Amazon Echo</title>
+    <title>นวัตกรรม & เทคโนโลยี - Amazon Echo Store</title>
     <style>
-        :root { --bg-color: #080c14; --card-bg: rgba(21, 28, 46, 0.75); --accent-cyan: #00f2fe; --accent-blue: #4facfe; --text-main: #f0f4f8; --text-sub: #94a3b8; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        :root {
+            --bg-color: #080c14;
+            --card-bg: rgba(21, 28, 46, 0.75);
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --text-main: #f0f4f8;
+            --text-sub: #94a3b8;
+        }
 
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 8%; background: rgba(8, 12, 20, 0.85); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 242, 254, 0.15); }
-        .logo { font-size: 1.4rem; font-weight: bold; background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-        .nav-links a { color: var(--text-sub); text-decoration: none; }
-        .nav-links a.active { color: var(--accent-cyan); }
-        .btn-buy { background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); color: #000; font-weight: bold; padding: 0.6rem 1.2rem; border-radius: 20px; text-decoration: none; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        .container { padding: 3rem 8%; }
-        .tech-box { background: var(--card-bg); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255, 255, 255, 0.08); }
-        h2 { color: var(--accent-cyan); margin-bottom: 1rem; }
-        .img-container { text-align: center; margin: 1.5rem 0; }
-        .img-container img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(0,242,254,0.3); }
-        code { background: rgba(0,0,0,0.5); color: var(--accent-cyan); padding: 0.2rem 0.5rem; border-radius: 4px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-        @media (max-width: 768px) { nav { flex-direction: column; gap: 0.8rem; } .container { padding: 1.5rem 5%; } }
+        /* Canvas Dynamic Background */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 8%;
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        .btn-buy-nav {
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue));
+            color: #000 !important;
+            font-weight: bold !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+        }
+
+        /* Header Section */
+        .tech-header {
+            padding: 3.5rem 8% 1.5rem 8%;
+            text-align: center;
+        }
+
+        .tech-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tech-header p {
+            color: var(--text-sub);
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        /* Main Container */
+        .container {
+            padding: 2rem 8% 4rem 8%;
+        }
+
+        /* Feature Card with Images */
+        .tech-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .tech-card.reverse {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .tech-card-img {
+            width: 100%;
+            height: 280px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+            position: relative;
+        }
+
+        .tech-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .tech-card:hover .tech-card-img img {
+            transform: scale(1.05);
+        }
+
+        .tech-card-content h2 {
+            color: var(--accent-cyan);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tech-card-content p {
+            color: var(--text-sub);
+            font-size: 0.98rem;
+            margin-bottom: 1.2rem;
+        }
+
+        /* Step Process Box (Diagram Alternative) */
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .step-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .step-num {
+            background: var(--accent-cyan);
+            color: #000;
+            font-weight: bold;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        /* Formula Tag */
+        .formula-tag {
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--accent-cyan);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            border: 1px dashed rgba(0, 242, 254, 0.4);
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Mobile Adaptation */
+        @media (max-width: 868px) {
+            nav {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .tech-card, .tech-card.reverse {
+                grid-template-columns: 1fr;
+            }
+            .tech-card-img {
+                height: 200px;
+            }
+            .container {
+                padding: 1.5rem 5%;
+            }
+        }
     </style>
 </head>
 <body>
 
+    <canvas id="bg-canvas"></canvas>
+
     <nav>
-        <div class="logo">AMAZON ECHO STORE</div>
+        <div class="logo">ECHO AI 2026</div>
         <ul class="nav-links">
-            <li><a href="index.html">หน้าแรก</a></li>
-            <li><a href="tech-details.html" class="active">นวัตกรรม & เทคโนโลยี</a></li>
-            <li><a href="models-pricing.html">แคตตาล็อกสินค้า</a></li>
-            <li><a href="checkout.html" class="btn-buy">สั่งซื้อเลย</a></li>
+            <li><a href="index.html">หน้าแรก (Overview)</a></li>
+            <li><a href="tech-details.html" class="active">เทคนิคและการจำลอง (Tech)</a></li>
+            <li><a href="models-pricing.html">รุ่นสินค้าและคู่มือ (Models)</a></li>
+            <li><a href="checkout.html" class="btn-buy-nav">สั่งซื้อเลย</a></li>
         </ul>
     </nav>
 
+    <section class="tech-header">
+        <h1>นวัตกรรมเทคโนโลยีเบื้องหลัง Amazon Echo</h1>
+        <p>สัมผัสขีดสุดแห่งการประมวลผลเสียง AI ระบบอัลกอริทึมคณิตศาสตร์ และการเชื่อมต่อ Smart Home ไร้ขีดจำกัด</p>
+    </section>
+
     <div class="container">
-        <!-- Desmos Math Performance -->
-        <div class="tech-box">
-            <h2>1. ระบบประมวลผลคลื่นเสียงวงแหวนไฟ (Desmos Math Simulation)</h2>
-            <p>Amazon Echo ใช้การคำนวณวงแหวนไฟ LED และการรับสัญญาณคลื่นเสียงความแม่นยำสูงผ่านสมการทางคณิตศาสตร์:</p>
-            <div class="img-container">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80" alt="Desmos Sound Graph Simulation">
+
+        <!-- Tech Card 1: Desmos Sound Processing -->
+        <div class="tech-card">
+            <div class="tech-card-img">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Sound Signal Wave Math">
             </div>
-            <p>• <strong>Light Ring Ring:</strong> <code>x(θ) = (R + A sin(nθ - t)) cos(θ)</code><br>
-            • <strong>Voice Pipeline:</strong> <code>f(x) = sin(x - t) + 0.3 sin(6(x - t))</code> ช่วยกรองเสียงรบกวนรอบข้าง</p>
+            <div class="tech-card-content">
+                <h2>1. อัลกอริทึมคณิตศาสตร์ประมวลผลเสียง (Desmos Simulation)</h2>
+                <p>Amazon Echo ใช้การคำนวณวงแหวนไฟ LED และการกรองคลื่นเสียงตัดเสียงรบกวนรอบข้าง (Noise Cancellation) ผ่านสมการคลื่นไซน์ความแม่นยำสูง เพื่อให้ไมโครโฟนได้ยินเสียงคุณอย่างชัดเจนแม้อยู่ในห้องที่มีเสียงดัง</p>
+                <div class="formula-tag">
+                    Voice Pipeline: f(x) = sin(x - t) + 0.3 sin(6(x - t))
+                </div>
+            </div>
         </div>
 
-        <!-- Mermaid Smart Home Diagram -->
-        <div class="tech-box">
-            <h2>2. โครงสร้างการเชื่อมโยง Smart Home Ecosystem (Mermaid AI)</h2>
-            <p>ความเร็วในการสั่งการและรับตอบสนองอย่างไร้รอยต่อภายในบ้านของคุณ:</p>
-            <div class="img-container">
-                <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1000&q=80" alt="Smart Home Ecosystem Diagram">
+        <!-- Tech Card 2: Smart Home Workflow (Mermaid Diagram Rendered as Visual Workflow) -->
+        <div class="tech-card reverse">
+            <div class="tech-card-content">
+                <h2>2. ไดอะแกรมการทำงาน Smart Home Ecosystem (Mermaid AI)</h2>
+                <p>สถาปัตยกรรมสั่งการไร้สายความเร็วสูง เชื่อมต่อทุกอุปกรณ์ในบ้านตอบสนองทันใจภายใน 0.2 วินาที:</p>
+                
+                <div class="workflow-steps">
+                    <div class="step-item">
+                        <span class="step-num">1</span>
+                        <span><strong>User Voice Command:</strong> รับคำสั่งเสียงผู้ใช้งาน</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">2</span>
+                        <span><strong>Alexa Cloud Service:</strong> ประมวลผลภาษาธรรมชาติ (NLP)</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">3</span>
+                        <span><strong>Device Action:</strong> แยกประเภทคำสั่ง (เปิด-ปิดไฟ, เปิดเพลง, ปรับแอร์)</span>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">4</span>
+                        <span><strong>Feedback Loop:</strong> ส่งสถานะการทำงานตอบกลับด้วยเสียงและแสงไฟ</span>
+                    </div>
+                </div>
             </div>
-            <p>ผู้ใช้งานสั่งเสียง ➔ Echo Hub ประมวลผลบน Cloud ➔ ส่งคำสั่งไปยัง สวิตช์ไฟ / เครื่องปรับอากาศ / TV ทันทีใน 0.2 วินาที</p>
+            <div class="tech-card-img">
+                <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80" alt="Smart Home Ecosystem">
+            </div>
         </div>
+
+        <!-- Tech Card 3: Cloud & AI Processing -->
+        <div class="tech-card">
+            <div class="tech-card-img">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="AI Neural Network Chip">
+            </div>
+            <div class="tech-card-content">
+                <h2>3. ชิปประมวลผล AI และการเรียนรู้ภาษาไทย</h2>
+                <p>ยกระดับขีดความสามารถด้วยระบบประมวลผล Neural Edge AI ในตัวเครื่อง ตอบสนองคำสั่งภาษาไทยได้อย่างเป็นธรรมชาติ พร้อมระบบ Routines อัตโนมัติที่จดจำไลฟ์สไตล์ประจำวันของคุณ</p>
+            </div>
+        </div>
+
     </div>
 
+    <!-- Canvas Particle Background Script -->
+    <script>
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            init();
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.7;
+                this.speedY = (Math.random() - 0.5) * 0.7;
+                this.color = `rgba(0, 242, 254, ${Math.random() * 0.5 + 0.2})`;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < 50; i++) particlesArray.push(new Particle());
+        }
+
+        function connectParticles() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let dx = particlesArray[a].x - particlesArray[b].x;
+                    let dy = particlesArray[a].y - particlesArray[b].y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 110) {
+                        ctx.strokeStyle = `rgba(0, 242, 254, ${1 - distance / 110 - 0.7})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            connectParticles();
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
 </body>
 </html>
