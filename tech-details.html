@@ -3,78 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Technical Details & Simulations - Amazon Echo</title>
+    <title>เทคโนโลยี & นวัตกรรม - Amazon Echo</title>
     <style>
-        :root {
-            --bg-color: #0b0f19;
-            --card-bg: #151c2e;
-            --accent-cyan: #00f2fe;
-            --accent-blue: #4facfe;
-            --text-main: #f0f4f8;
-            --text-sub: #94a3b8;
-        }
-
+        :root { --bg-color: #080c14; --card-bg: rgba(21, 28, 46, 0.75); --accent-cyan: #00f2fe; --accent-blue: #4facfe; --text-main: #f0f4f8; --text-sub: #94a3b8; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
 
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 1.2rem 8%; background: rgba(11, 15, 25, 0.9); backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 8%; background: rgba(8, 12, 20, 0.85); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 242, 254, 0.15); }
         .logo { font-size: 1.4rem; font-weight: bold; background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-links { display: flex; gap: 1.5rem; list-style: none; }
         .nav-links a { color: var(--text-sub); text-decoration: none; }
         .nav-links a.active { color: var(--accent-cyan); }
+        .btn-buy { background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); color: #000; font-weight: bold; padding: 0.6rem 1.2rem; border-radius: 20px; text-decoration: none; }
 
         .container { padding: 3rem 8%; }
-        .section-box { background: var(--card-bg); border-radius: 12px; padding: 1.8rem; margin-bottom: 2rem; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .tech-box { background: var(--card-bg); border-radius: 16px; padding: 2rem; margin-bottom: 2rem; border: 1px solid rgba(255, 255, 255, 0.08); }
         h2 { color: var(--accent-cyan); margin-bottom: 1rem; }
-        code { background: rgba(0,0,0,0.4); color: #00f2fe; padding: 0.2rem 0.5rem; border-radius: 4px; font-family: monospace; }
-        
-        .formula-list { list-style: none; margin-top: 1rem; }
-        .formula-list li { margin-bottom: 0.8rem; padding-left: 1rem; border-left: 3px solid var(--accent-blue); }
+        .img-container { text-align: center; margin: 1.5rem 0; }
+        .img-container img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(0,242,254,0.3); }
+        code { background: rgba(0,0,0,0.5); color: var(--accent-cyan); padding: 0.2rem 0.5rem; border-radius: 4px; }
 
-        @media (max-width: 768px) {
-            nav { flex-direction: column; gap: 1rem; }
-            .container { padding: 1.5rem 5%; }
-        }
+        @media (max-width: 768px) { nav { flex-direction: column; gap: 0.8rem; } .container { padding: 1.5rem 5%; } }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">ECHO AI 2026</div>
+        <div class="logo">AMAZON ECHO STORE</div>
         <ul class="nav-links">
-            <li><a href="index.html">หน้าหลัก (Overview)</a></li>
-            <li><a href="tech-details.html" class="active">เทคนิคและการจำลอง (Tech)</a></li>
-            <li><a href="models-pricing.html">รุ่นสินค้าและคู่มือ (Models)</a></li>
+            <li><a href="index.html">หน้าแรก</a></li>
+            <li><a href="tech-details.html" class="active">นวัตกรรม & เทคโนโลยี</a></li>
+            <li><a href="models-pricing.html">แคตตาล็อกสินค้า</a></li>
+            <li><a href="checkout.html" class="btn-buy">สั่งซื้อเลย</a></li>
         </ul>
     </nav>
 
     <div class="container">
-        <!-- Desmos Section -->
-        <div class="section-box">
-            <h2>1. การสร้างกราฟความสัมพันธ์คณิตศาสตร์ (Desmos Calculator)</h2>
-            <p>จำลองวงแหวนไฟ (Light Ring) และคลื่นเสียงประมวลผล (Voice Wave) ด้วยระบบสมการอิงตัวแปรเสริม (Parametric Equations):</p>
-            <ul class="formula-list">
-                <li><strong>วงแหวนไฟ (Light Ring):</strong> <code>x(θ) = (R + A sin(nθ - t)) cos(θ)</code></li>
-                <li><strong>คลื่นเสียง (Sound Wave Pipeline):</strong> <code>f(x) = sin(x - t) + 0.3 sin(6(x - t))</code></li>
-                <li><strong>การตอบสนองระบบ:</strong> ใช้ตัวแปร <code>t</code> สำหรับทำ Animation แสดงการประมวลผลคำสั่งเสียง</li>
-            </ul>
+        <!-- Desmos Math Performance -->
+        <div class="tech-box">
+            <h2>1. ระบบประมวลผลคลื่นเสียงวงแหวนไฟ (Desmos Math Simulation)</h2>
+            <p>Amazon Echo ใช้การคำนวณวงแหวนไฟ LED และการรับสัญญาณคลื่นเสียงความแม่นยำสูงผ่านสมการทางคณิตศาสตร์:</p>
+            <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80" alt="Desmos Sound Graph Simulation">
+            </div>
+            <p>• <strong>Light Ring Ring:</strong> <code>x(θ) = (R + A sin(nθ - t)) cos(θ)</code><br>
+            • <strong>Voice Pipeline:</strong> <code>f(x) = sin(x - t) + 0.3 sin(6(x - t))</code> ช่วยกรองเสียงรบกวนรอบข้าง</p>
         </div>
 
-        <!-- Mermaid Section -->
-        <div class="section-box">
-            <h2>2. ไดอะแกรมการทำงาน Smart Home (Mermaid AI)</h2>
-            <p>จำลอง Workflow การรับคำสั่งเสียงจากผู้ใช้ -> ส่งไปยัง Alexa Service -> แยกประเภทคำสั่ง (เช่น ควบคุมวงจรไฟ หรือเล่นเพลง) -> ส่งสถานะตอบกลับให้ผู้ใช้งาน</p>
-        </div>
-
-        <!-- Overleaf Section -->
-        <div class="section-box">
-            <h2>3. เอกสารวิชาการ LaTeX (Overleaf)</h2>
-            <p>โครงสร้างบทความ LaTeX รองรับภาษาไทย (<code>\usepackage{fontspec}</code>) ครอบคลุมเนื้อหาการประยุกต์ใช้งานในครัวเรือน, คำสั่งเสียงเบื้องต้น, การตั้งค่า Routines อัตโนมัติ และระบบ Drop In</p>
+        <!-- Mermaid Smart Home Diagram -->
+        <div class="tech-box">
+            <h2>2. โครงสร้างการเชื่อมโยง Smart Home Ecosystem (Mermaid AI)</h2>
+            <p>ความเร็วในการสั่งการและรับตอบสนองอย่างไร้รอยต่อภายในบ้านของคุณ:</p>
+            <div class="img-container">
+                <img src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1000&q=80" alt="Smart Home Ecosystem Diagram">
+            </div>
+            <p>ผู้ใช้งานสั่งเสียง ➔ Echo Hub ประมวลผลบน Cloud ➔ ส่งคำสั่งไปยัง สวิตช์ไฟ / เครื่องปรับอากาศ / TV ทันทีใน 0.2 วินาที</p>
         </div>
     </div>
 
