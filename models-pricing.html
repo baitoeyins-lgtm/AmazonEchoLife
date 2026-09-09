@@ -3,90 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>แคตตาล็อกรุ่น & ราคา - Amazon Echo Store</title>
+    <title>แคตตาล็อกสินค้า - Amazon Echo Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali:wght@500;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --bg-color: #080c14; --card-bg: rgba(21, 28, 46, 0.75); --accent-cyan: #00f2fe; --accent-blue: #4facfe; --text-main: #f0f4f8; --text-sub: #94a3b8; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        :root {
+            --bg-color: #080c14;
+            --card-bg: rgba(21, 28, 46, 0.85);
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --text-main: #f0f4f8;
+            --text-sub: #94a3b8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Itim', 'Mali', cursive, sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
 
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 8%; background: rgba(8, 12, 20, 0.85); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 242, 254, 0.15); }
-        .logo { font-size: 1.4rem; font-weight: bold; background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .nav-links { display: flex; gap: 1.5rem; list-style: none; }
-        .nav-links a { color: var(--text-sub); text-decoration: none; }
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 6%; background: rgba(8, 12, 20, 0.9); backdrop-filter: blur(12px);
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: bold; background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-family: 'Mali', cursive; }
+        .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-sub); text-decoration: none; font-size: 1.05rem; }
         .nav-links a.active { color: var(--accent-cyan); }
-        .btn-buy { background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); color: #000; font-weight: bold; padding: 0.6rem 1.2rem; border-radius: 20px; text-decoration: none; }
 
-        .container { padding: 3rem 8%; }
-        
-        table { width: 100%; border-collapse: collapse; margin: 2rem 0; background: var(--card-bg); border-radius: 12px; overflow: hidden; }
-        th, td { padding: 1.2rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        th { background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); }
+        .btn-buy-nav {
+            background: linear-gradient(45deg, var(--accent-cyan), var(--accent-blue)); color: #000 !important; font-weight: bold !important;
+            padding: 0.5rem 1.2rem; border-radius: 20px; box-shadow: 0 0 12px rgba(0, 242, 254, 0.5);
+        }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
-        .card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .card img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+        .container { padding: 3rem 6%; }
+        h1 { text-align: center; font-family: 'Mali', cursive; color: #fff; font-size: 2.3rem; margin-bottom: 2rem; }
 
-        @media (max-width: 768px) { nav { flex-direction: column; gap: 0.8rem; } .container { padding: 1.5rem 5%; } table { font-size: 0.85rem; } }
+        /* Responsive Table */
+        .table-responsive { width: 100%; overflow-x: auto; margin-bottom: 3rem; border-radius: 16px; border: 1px solid rgba(0, 242, 254, 0.2); }
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); text-align: left; min-width: 550px; }
+        th, td { padding: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 1.05rem; }
+        th { background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan); font-family: 'Mali', cursive; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.8rem; }
+        .card {
+            background: var(--card-bg); padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.08);
+            transition: 0.3s; text-align: center;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent-cyan); }
+
+        .card-img {
+            width: 100%; height: 180px; object-fit: contain; border-radius: 12px; margin-bottom: 1rem; background: #000;
+            animation: floatImg 4s ease-in-out infinite alternate;
+        }
+        @keyframes floatImg { 0% { transform: translateY(0); } 100% { transform: translateY(-6px); } }
+
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 0.8rem; padding: 1rem 4%; text-align: center; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+            .container { padding: 1.5rem 4%; }
+        }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">AMAZON ECHO STORE</div>
+        <div class="logo">AMAZON ECHO STORE 2026</div>
         <ul class="nav-links">
             <li><a href="index.html">หน้าแรก</a></li>
-            <li><a href="tech-details.html">นวัตกรรม & เทคโนโลยี</a></li>
+            <li><a href="tech-details.html">นวัตกรรม & สไลด์อ้างอิง</a></li>
             <li><a href="models-pricing.html" class="active">แคตตาล็อกสินค้า</a></li>
-            <li><a href="checkout.html" class="btn-buy">สั่งซื้อเลย</a></li>
+            <li><a href="checkout.html" class="btn-buy-nav">สั่งซื้อเลย</a></li>
         </ul>
     </nav>
 
     <div class="container">
-        <h2>เปรียบเทียบตระกูล Amazon Echo ทั้งหมด</h2>
-        <div style="overflow-x:auto;">
+        <h1>ตารางเปรียบเทียบรุ่นสินค้า Ambient AI (อ้างอิงสไลด์ 6)</h1>
+
+        <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
                         <th>รุ่นสินค้า</th>
-                        <th>จุดเด่นเทคโนโลยี</th>
-                        <th>เหมาะสำหรับ</th>
+                        <th>เทคโนโลยีประมวลผล</th>
+                        <th>ประเภทการแสดงผล</th>
                         <th>ราคาขาย</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Echo Dot Max</strong></td>
-                        <td>ชิป AZ3, ลำโพงรอบทิศทาง 360°</td>
-                        <td>ห้องนอน, โต๊ะทำงาน</td>
-                        <td><strong>฿2,190</strong></td>
+                        <td><strong>Echo Sphere 2026</strong></td>
+                        <td>AZ3 Neural Engine</td>
+                        <td>โฮโลแกรม / Gesture Interface</td>
+                        <td style="color: var(--accent-cyan); font-weight: bold;">฿6,590</td>
                     </tr>
                     <tr>
-                        <td><strong>Echo Studio Pro</strong></td>
-                        <td>Spatial Audio, Hi-Res Sound, Dolby Atmos</td>
-                        <td>ห้องนั่งเล่น, ระบบโฮมเธียเตอร์</td>
-                        <td><strong>฿7,990</strong></td>
+                        <td><strong>Echo Cylinder 2026</strong></td>
+                        <td>AZ3 Edge Computing</td>
+                        <td>Ambient LED Light Ring</td>
+                        <td style="color: var(--accent-cyan); font-weight: bold;">฿4,290</td>
                     </tr>
                     <tr>
-                        <td><strong>Echo Show 11</strong></td>
-                        <td>หน้าจอ HD สัมผัส, กล้องติดตามตัว AI</td>
-                        <td>ศูนย์กลางบ้าน, วิดีโอคอล, ดูสูตรอาหาร</td>
-                        <td><strong>฿8,490</strong></td>
+                        <td><strong>Echo Show Series</strong></td>
+                        <td>Alexa+ Cloud AI</td>
+                        <td>หน้าจอ HD Touchscreen</td>
+                        <td style="color: var(--accent-cyan); font-weight: bold;">฿7,990</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <h2 style="margin-top: 3rem;">รูปภาพอุปกรณ์จริงในโชว์รูม</h2>
+        <h1 style="font-size: 2rem;">สินค้าในตระกูล Amazon Echo</h1>
         <div class="grid">
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=600&q=80" alt="Echo Dot">
-                <h3>Echo Dot Series</h3>
-                <p>ขนาดกะทัดรัด ดีไซน์ลงตัวกับทุกมุมห้อง</p>
+                <img class="card-img" src="https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=600&q=80" alt="Echo Dot">
+                <h3 style="color: var(--accent-cyan); font-family: 'Mali', cursive;">Echo Dot Compact</h3>
+                <p style="color: var(--text-sub);">ดีไซน์ทรงกลมมินิมอล ตอบสนองรวดเร็ว</p>
             </div>
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80" alt="Echo Studio">
-                <h3>Echo Studio</h3>
-                <p>เสียงกระหึ่มเบสตึ้ก สำหรับสายฟังเพลงตัวจริง</p>
+                <img class="card-img" src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=600&q=80" alt="Echo Studio">
+                <h3 style="color: var(--accent-cyan); font-family: 'Mali', cursive;">Echo Show Smart Display</h3>
+                <p style="color: var(--text-sub);">แสดงผลข้อมูล และควบคุมอุปกรณ์ในบ้าน</p>
             </div>
         </div>
     </div>
